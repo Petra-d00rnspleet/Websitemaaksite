@@ -1,979 +1,440 @@
-/* ============================================================
-   Website Bestellen — "Bouwbon" ontwerpsysteem
-   Kleuren, type en lagen gedeeld door alle schermen
-   ============================================================ */
+/* ===================================================================
+   Bouwsteen — basisstijl
+   Kleur: koel papier (#EEF1F6) + inkt (#14171F) + indigo (#4B5FFF)
+          + koraal (#FF7A50) als spaarzaam accent
+   Type:  Space Grotesk (kop) + Inter (body)
+=================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  --blauw-diep: #0b2545;
-  --blauw-paneel: #123a63;
-  --blauw-lijn: rgba(255, 255, 255, 0.09);
-  --papier: #f4f0e4;
-  --papier-schaduw: #e6dfcc;
-  --inkt: #1c1c18;
-  --inkt-zacht: #55544a;
-  --stempel-rood: #d6543c;
-  --stempel-rood-donker: #b8432e;
-  --groen-ontvangen: #3c6e47;
-  --focus-ring: #ffd166;
+  --bg: #EEF1F6;
+  --surface: #FFFFFF;
+  --ink: #14171F;
+  --ink-soft: #565C6B;
+  --line: #D7DCE5;
+  --accent: #4B5FFF;
+  --accent-ink: #FFFFFF;
+  --accent-warm: #FF7A50;
 
-  --font-technisch: "JetBrains Mono", "Courier New", monospace;
-  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --radius: 14px;
+  --shadow: 0 1px 2px rgba(20, 23, 31, 0.06), 0 8px 24px rgba(20, 23, 31, 0.06);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
-html,
+html { -webkit-font-smoothing: antialiased; }
+
 body {
   margin: 0;
-  padding: 0;
-  min-height: 100vh;
-}
-
-body {
+  background: var(--bg);
+  color: var(--ink);
   font-family: var(--font-body);
-  color: var(--papier);
-  background-color: var(--blauw-diep);
-  background-image:
-    linear-gradient(var(--blauw-lijn) 1px, transparent 1px),
-    linear-gradient(90deg, var(--blauw-lijn) 1px, transparent 1px);
-  background-size: 32px 32px;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Respecteer reduced-motion voorkeur */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.001ms !important;
-    transition-duration: 0.001ms !important;
-  }
-}
-
-a {
-  color: inherit;
-}
-
-/* ---------- Kop / merk ---------- */
-
-.merk {
-  position: fixed;
-  top: 24px;
-  left: 28px;
-  font-family: var(--font-technisch);
-  font-size: 13px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(244, 240, 228, 0.55);
-  z-index: 5;
-}
-
-.merk span {
-  color: var(--stempel-rood);
-}
-
-/* ---------- Focus states (toetsenbord) ---------- */
-
-button:focus-visible,
-input:focus-visible,
-textarea:focus-visible,
-a:focus-visible {
-  outline: 3px solid var(--focus-ring);
-  outline-offset: 3px;
-}
-
-/* ============================================================
-   Startscherm — rolkeuze
-   ============================================================ */
-
-.start-scherm {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  text-align: center;
-  gap: 56px;
-}
-
-.start-titel {
-  font-family: var(--font-technisch);
-  font-size: clamp(28px, 5vw, 44px);
-  letter-spacing: 0.02em;
-  line-height: 1.3;
-  max-width: 720px;
-  color: var(--papier);
-}
-
-.start-titel .onderstreping {
-  display: inline-block;
-  border-bottom: 3px solid var(--stempel-rood);
-  padding-bottom: 4px;
-}
-
-.rol-keuze {
-  display: flex;
-  gap: 40px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-/* Stempel-knoppen */
-.stempel-knop {
-  --kleur: var(--papier);
-  font-family: var(--font-technisch);
-  font-size: 18px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  background: transparent;
-  color: var(--kleur);
-  border: 3px solid var(--kleur);
-  border-radius: 999px;
-  padding: 26px 44px;
-  cursor: pointer;
-  transform: rotate(var(--hoek, -2deg));
-  transition: transform 0.15s ease, background-color 0.15s ease, color 0.15s ease;
-  position: relative;
-}
-
-.stempel-knop::after {
-  content: attr(data-onderschrift);
-  display: block;
-  font-size: 11px;
-  letter-spacing: 0.08em;
-  margin-top: 6px;
-  opacity: 0.7;
-  text-transform: none;
-}
-
-.stempel-knop:hover,
-.stempel-knop:focus-visible {
-  transform: rotate(0deg) scale(1.04);
-  background-color: var(--kleur);
-  color: var(--blauw-diep);
-}
-
-.stempel-knop.rood {
-  --kleur: var(--stempel-rood);
-  --hoek: 2deg;
-}
-
-/* ---------- Terugknop ---------- */
-
-.terug-link {
-  position: fixed;
-  top: 24px;
-  right: 28px;
-  font-family: var(--font-technisch);
-  font-size: 13px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: rgba(244, 240, 228, 0.7);
-  border: 1px solid rgba(244, 240, 228, 0.35);
-  border-radius: 999px;
-  padding: 8px 16px;
-  z-index: 5;
-  transition: border-color 0.15s ease, color 0.15s ease;
-}
-
-.terug-link:hover {
-  border-color: var(--papier);
-  color: var(--papier);
-}
-
-/* ============================================================
-   De "bon" (het formulier / de kaart) — signature element
-   ============================================================ */
-
-.bon-wrapper {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 100px 20px 60px;
-}
-
-.bon {
-  background: var(--papier);
-  color: var(--inkt);
-  width: 100%;
-  max-width: 560px;
-  padding: 40px 36px 36px;
-  border-radius: 4px;
-  position: relative;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
-}
-
-/* geperforeerde rand bovenaan, alsof de bon is afgescheurd */
-.bon::before {
-  content: "";
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
-  height: 12px;
-  background-image: radial-gradient(circle, var(--blauw-diep) 4px, transparent 4.5px);
-  background-size: 20px 12px;
-  background-position: 10px 0;
-  background-repeat: repeat-x;
-}
-
-.bon-kop {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  border-bottom: 2px dashed var(--papier-schaduw);
-  padding-bottom: 16px;
-  margin-bottom: 24px;
-  gap: 12px;
-}
-
-.bon-kop h1 {
-  font-family: var(--font-technisch);
-  font-size: 20px;
-  letter-spacing: 0.04em;
-  margin: 0 0 4px;
-  text-transform: uppercase;
-}
-
-.bon-kop p {
-  margin: 0;
-  font-size: 13px;
-  color: var(--inkt-zacht);
-}
-
-.bon-nummer {
-  font-family: var(--font-technisch);
-  font-size: 12px;
-  text-align: right;
-  color: var(--inkt-zacht);
-  white-space: nowrap;
-}
-
-.veld {
-  margin-bottom: 20px;
-}
-
-.veld label {
-  display: block;
-  font-family: var(--font-technisch);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--inkt-zacht);
-  margin-bottom: 8px;
-}
-
-.veld input[type="text"],
-.veld input[type="password"],
-.veld textarea {
-  width: 100%;
-  font-family: var(--font-body);
-  font-size: 15px;
-  padding: 12px 14px;
-  border: 2px solid var(--papier-schaduw);
-  border-radius: 3px;
-  background: #fffdf8;
-  color: var(--inkt);
-  resize: vertical;
-}
-
-.veld textarea {
-  min-height: 140px;
   line-height: 1.5;
 }
 
-.veld input:focus,
-.veld textarea:focus {
-  border-color: var(--stempel-rood);
-  outline: none;
+h1, h2, h3, .display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0;
 }
 
-.bon-actie {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 28px;
-}
+a { color: inherit; }
 
-.knop-verzend {
-  font-family: var(--font-technisch);
-  font-size: 14px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  background: var(--stempel-rood);
-  color: var(--papier);
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
   border: none;
-  border-radius: 3px;
-  padding: 14px 28px;
-  cursor: pointer;
-  transition: background-color 0.15s ease, transform 0.1s ease;
 }
 
-.knop-verzend:hover,
-.knop-verzend:focus-visible {
-  background: var(--stempel-rood-donker);
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
-.knop-verzend:active {
-  transform: translateY(1px);
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
 }
 
-.knop-verzend:disabled {
-  background: var(--papier-schaduw);
-  color: var(--inkt-zacht);
-  cursor: not-allowed;
-}
-
-.status-tekst {
-  font-size: 13px;
-  color: var(--inkt-zacht);
-  min-height: 18px;
-}
-
-.status-tekst.fout {
-  color: var(--stempel-rood-donker);
-}
-
-.status-tekst.goed {
-  color: var(--groen-ontvangen);
-}
-
-/* Stempel "ONTVANGEN" die verschijnt na verzenden */
-.ontvangen-stempel {
-  position: absolute;
-  top: 36px;
-  right: 32px;
-  border: 3px solid var(--groen-ontvangen);
-  color: var(--groen-ontvangen);
-  font-family: var(--font-technisch);
-  font-size: 13px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  padding: 6px 14px;
-  border-radius: 6px;
-  transform: rotate(-8deg);
-  opacity: 0;
-  transition: opacity 0.25s ease, transform 0.25s ease;
-  pointer-events: none;
-}
-
-.ontvangen-stempel.zichtbaar {
-  opacity: 1;
-  transform: rotate(-8deg) scale(1);
-}
-
-/* ============================================================
-   Beheerder — wachtwoordscherm
-   ============================================================ */
-
-.login-wrapper {
-  flex: 1;
+/* ---------- Topbar (gedeeld) ---------- */
+.topbar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
+  justify-content: space-between;
+  padding: 18px 32px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
 }
 
-.login-bon {
-  background: var(--papier);
-  color: var(--inkt);
-  width: 100%;
-  max-width: 380px;
-  padding: 36px 32px;
-  border-radius: 4px;
-  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
-  text-align: center;
-}
-
-.login-bon h1 {
-  font-family: var(--font-technisch);
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
   font-size: 18px;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-top: 0;
 }
 
-.login-bon p {
-  color: var(--inkt-zacht);
-  font-size: 13px;
-  margin-bottom: 24px;
+.logo-mark {
+  width: 26px;
+  height: 26px;
+  border-radius: 7px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-warm));
+  flex-shrink: 0;
 }
 
-/* ============================================================
-   Beheerder — bestellingen dashboard
-   ============================================================ */
-
-.dashboard {
-  flex: 1;
-  padding: 110px 24px 60px;
-  max-width: 900px;
-  margin: 0 auto;
-  width: 100%;
-}
-
-.dashboard-kop {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 32px;
-  border-bottom: 2px solid var(--blauw-lijn);
-  padding-bottom: 20px;
-}
-
-.dashboard-kop h1 {
-  font-family: var(--font-technisch);
-  font-size: clamp(22px, 4vw, 30px);
-  letter-spacing: 0.02em;
-  margin: 0;
-}
-
-.dashboard-kop .telling {
-  font-family: var(--font-technisch);
-  font-size: 13px;
-  color: rgba(244, 240, 228, 0.6);
-}
-
-.uitloggen {
-  background: none;
-  border: 1px solid rgba(244, 240, 228, 0.35);
-  color: var(--papier);
-  font-family: var(--font-technisch);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 999px;
-  padding: 8px 16px;
-  cursor: pointer;
-  transition: border-color 0.15s ease;
-}
-
-.uitloggen:hover,
-.uitloggen:focus-visible {
-  border-color: var(--stempel-rood);
-  color: var(--stempel-rood);
-}
-
-.bestellingen-lijst {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.bestelling-kaart {
-  background: var(--papier);
-  color: var(--inkt);
-  border-radius: 4px;
-  padding: 20px 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-  position: relative;
-}
-
-.bestelling-kaart-kop {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-
-.bestelling-kaart-kop h2 {
-  font-family: var(--font-technisch);
-  font-size: 16px;
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
-.bestelling-datum {
-  font-family: var(--font-technisch);
-  font-size: 11px;
-  color: var(--inkt-zacht);
-  white-space: nowrap;
-}
-
-.bestelling-omschrijving {
-  font-size: 14px;
-  line-height: 1.6;
-  color: #2b2a24;
-  white-space: pre-wrap;
-  margin: 0 0 14px;
-}
-
-.bestelling-acties {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-  flex-wrap: wrap;
-}
-
-.status-badge {
-  font-family: var(--font-technisch);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  padding: 5px 12px;
-  border-radius: 999px;
-  border: 1.5px solid var(--inkt-zacht);
-  color: var(--inkt-zacht);
-}
-
-.status-badge[data-status="nieuw"] {
-  border-color: var(--stempel-rood);
-  color: var(--stempel-rood-donker);
-}
-
-.status-badge[data-status="in-behandeling"] {
-  border-color: #8a6d1f;
-  color: #8a6d1f;
-}
-
-.status-badge[data-status="afgerond"] {
-  border-color: var(--groen-ontvangen);
-  color: var(--groen-ontvangen);
-}
-
-.status-select {
-  font-family: var(--font-technisch);
-  font-size: 12px;
-  padding: 6px 10px;
-  border-radius: 3px;
-  border: 1.5px solid var(--papier-schaduw);
-  background: #fffdf8;
-  color: var(--inkt);
-  cursor: pointer;
-}
-
-.leeg-melding {
-  font-family: var(--font-technisch);
-  text-align: center;
-  padding: 60px 20px;
-  color: rgba(244, 240, 228, 0.55);
-  font-size: 14px;
-}
-
-/* ============================================================
-   Tabs (besteller: nieuwe bestelling / mijn bestellingen)
-   ============================================================ */
-
-.tabs {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  margin: 0 0 28px;
-  flex-wrap: wrap;
-}
-
-.tab-knop {
-  font-family: var(--font-technisch);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: transparent;
-  color: rgba(244, 240, 228, 0.6);
-  border: 1.5px solid rgba(244, 240, 228, 0.3);
-  border-radius: 999px;
-  padding: 9px 18px;
-  cursor: pointer;
-  transition: border-color 0.15s ease, color 0.15s ease, background-color 0.15s ease;
-}
-
-.tab-knop:hover,
-.tab-knop:focus-visible {
-  border-color: var(--papier);
-  color: var(--papier);
-}
-
-.tab-knop.actief {
-  background: var(--stempel-rood);
-  border-color: var(--stempel-rood);
-  color: var(--papier);
-}
-
-/* ============================================================
-   Inline terugknop (binnen een scherm, i.t.t. de vaste .terug-link)
-   ============================================================ */
-
-.terug-inline {
+.btn {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  font-family: var(--font-technisch);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: none;
-  border: none;
-  color: rgba(244, 240, 228, 0.65);
-  cursor: pointer;
-  padding: 0;
-  margin-bottom: 20px;
-  text-decoration: none;
+  gap: 8px;
+  padding: 11px 20px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 14.5px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-.terug-inline:hover,
-.terug-inline:focus-visible {
-  color: var(--papier);
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
 }
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(75, 95, 255, 0.35); }
 
-/* ============================================================
-   Mini-lijst — "Mijn bestellingen" (besteller) en klikbare
-   bestelkaarten (beheerder), los klikbaar i.p.v. inline beheren
-   ============================================================ */
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+.btn-ghost:hover { border-color: var(--ink); }
 
-.pagina {
-  flex: 1;
-  padding: 110px 24px 60px;
-  max-width: 640px;
+/* ================= LANDINGSPAGINA ================= */
+
+.hero {
+  max-width: 1160px;
   margin: 0 auto;
-  width: 100%;
+  padding: 88px 32px 64px;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 48px;
+  align-items: center;
 }
 
-.pagina-breed {
-  max-width: 900px;
+.hero-eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 14.5px;
+  margin-bottom: 14px;
 }
 
-.pagina h1 {
-  font-family: var(--font-technisch);
-  font-size: clamp(22px, 4vw, 28px);
-  letter-spacing: 0.02em;
-  margin: 0 0 24px;
-  color: var(--papier);
+.hero h1 {
+  font-size: clamp(38px, 5vw, 58px);
+  max-width: 12ch;
 }
 
-.mini-lijst {
+.hero p {
+  color: var(--ink-soft);
+  font-size: 17px;
+  max-width: 46ch;
+  margin: 20px 0 28px;
+}
+
+.hero-actions { display: flex; gap: 12px; }
+
+/* Visuele metafoor: gestapelde bouwblokken */
+.stack-art {
+  position: relative;
+  height: 380px;
+}
+.stack-block {
+  position: absolute;
+  left: 0; right: 0;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--line);
+  padding: 16px 18px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--surface);
+}
+.stack-block .dot { width: 8px; height: 8px; border-radius: 50%; }
+.stack-block:nth-child(1) { top: 0; transform: rotate(-2deg); }
+.stack-block:nth-child(2) { top: 92px; transform: rotate(1.5deg); background: #F1F0FF; }
+.stack-block:nth-child(3) { top: 184px; transform: rotate(-1deg); }
+.stack-block:nth-child(4) { top: 276px; transform: rotate(2deg); background: #FFF1EB; }
+
+.sites-section {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 24px 32px 100px;
+}
+
+.sites-section h2 { font-size: 22px; margin-bottom: 18px; }
+
+.sites-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.site-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px;
+  text-decoration: none;
+  color: var(--ink);
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+.site-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+.site-card .thumb {
+  height: 90px;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.site-card h3 { font-size: 15.5px; font-weight: 600; }
+.site-card p { margin: 4px 0 0; font-size: 13px; color: var(--ink-soft); }
+
+.empty-state {
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  padding: 40px;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+/* ---------- Sjabloon-kiezer (modal) ---------- */
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(20, 23, 31, 0.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 50;
+}
+.modal-backdrop[hidden] { display: none; }
+
+.modal {
+  background: var(--surface);
+  border-radius: 18px;
+  padding: 32px;
+  width: min(720px, 92vw);
+  max-height: 86vh;
+  overflow-y: auto;
+}
+.modal h2 { font-size: 22px; margin-bottom: 6px; }
+.modal .modal-sub { color: var(--ink-soft); font-size: 14px; margin-bottom: 22px; }
+
+.template-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 14px;
 }
 
-.mini-kaart {
-  display: block;
-  width: 100%;
+.template-card {
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px;
   text-align: left;
-  background: var(--papier);
-  color: var(--inkt);
-  border: none;
-  border-radius: 4px;
-  padding: 18px 20px;
-  cursor: pointer;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
-  transition: transform 0.12s ease, box-shadow 0.12s ease;
-  font-family: var(--font-body);
+  background: var(--bg);
+}
+.template-card:hover { border-color: var(--accent); }
+.template-card .swatch { height: 64px; border-radius: 8px; margin-bottom: 12px; }
+.template-card strong { display: block; font-size: 14.5px; margin-bottom: 3px; }
+.template-card span { font-size: 12.5px; color: var(--ink-soft); }
+
+/* ================= EDITOR ================= */
+
+.editor-shell {
+  display: grid;
+  grid-template-columns: 260px 1fr 300px;
+  height: 100vh;
 }
 
-.mini-kaart:hover,
-.mini-kaart:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
-}
-
-.mini-kaart-kop {
+.editor-topbar {
+  grid-column: 1 / -1;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  gap: 12px;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface);
+}
+
+.editor-topbar .site-name {
+  border: none;
+  background: transparent;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+.editor-topbar .site-name:hover, .editor-topbar .site-name:focus { background: var(--bg); }
+
+.save-status { font-size: 12.5px; color: var(--ink-soft); }
+
+.panel {
+  background: var(--surface);
+  overflow-y: auto;
+  padding: 18px;
+}
+.panel-left { border-right: 1px solid var(--line); }
+.panel-right { border-left: 1px solid var(--line); }
+
+.panel h3 {
+  font-size: 12.5px;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.block-lib-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  background: var(--surface);
+  cursor: grab;
+  font-size: 13.5px;
+  font-weight: 500;
+}
+.block-lib-item:hover { border-color: var(--accent); background: #F6F7FF; }
+.block-lib-item .emoji { font-size: 17px; }
+
+.canvas-wrap {
+  overflow-y: auto;
+  background: var(--bg);
+  padding: 32px;
+}
+
+#canvas {
+  max-width: 860px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+  min-height: 70vh;
+  overflow: hidden;
+  font-family: var(--site-font, var(--font-body));
+}
+
+#canvas.drag-over { outline: 2px dashed var(--accent); outline-offset: -2px; }
+
+.canvas-empty {
+  padding: 90px 32px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 14.5px;
+}
+
+/* Blocks binnen de canvas */
+.block {
+  position: relative;
+  padding: 40px 48px;
+  border-bottom: 1px dashed transparent;
+}
+.block.selected { outline: 2px solid var(--accent); outline-offset: -2px; }
+.block:hover .block-toolbar { opacity: 1; }
+
+.block-toolbar {
+  position: absolute;
+  top: 8px; right: 8px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+.block-toolbar button {
+  width: 28px; height: 28px;
+  border-radius: 7px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 13px;
+  display: flex; align-items: center; justify-content: center;
+}
+.block-toolbar button:hover { background: var(--accent); }
+
+.block[contenteditable="true"]:focus,
+.block [contenteditable="true"]:focus { outline: none; background: #F6F7FF; }
+
+/* blok-varianten */
+.b-header { text-align: center; padding-top: 64px; padding-bottom: 64px; }
+.b-header h1 { font-size: clamp(28px, 4vw, 42px); }
+.b-header p { color: var(--ink-soft); margin-top: 10px; }
+
+.b-text h2 { font-size: 22px; margin-bottom: 10px; }
+.b-text p { color: var(--ink-soft); }
+
+.b-image img { width: 100%; border-radius: var(--site-radius, 10px); display: block; }
+
+.b-button { text-align: center; }
+.b-button a {
+  display: inline-block;
+  padding: 12px 26px;
+  border-radius: var(--site-radius, 999px);
+  background: var(--site-accent, var(--accent));
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.b-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.b-gallery img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--site-radius, 8px); }
+
+.b-footer { text-align: center; color: var(--ink-soft); font-size: 13.5px; padding: 28px 48px; }
+
+/* ---------- Rechterpaneel: stijl ---------- */
+.field { margin-bottom: 16px; }
+.field label {
+  display: block;
+  font-size: 12.5px;
+  color: var(--ink-soft);
   margin-bottom: 6px;
 }
-
-.mini-kaart-kop h2 {
-  font-family: var(--font-technisch);
-  font-size: 15px;
-  margin: 0;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+.field input[type="color"] {
+  width: 100%; height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 3px;
+  background: var(--surface);
 }
-
-.mini-kaart-datum {
-  font-family: var(--font-technisch);
-  font-size: 11px;
-  color: var(--inkt-zacht);
-  white-space: nowrap;
-}
-
-.mini-kaart-voorbeeld {
-  font-size: 13px;
-  color: var(--inkt-zacht);
-  margin: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.mini-kaart-voet {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.pijl {
-  font-family: var(--font-technisch);
-  font-size: 12px;
-  color: var(--stempel-rood-donker);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-}
-
-/* ============================================================
-   Detailscherm (bestelling) — gedeeld door besteller & beheerder
-   ============================================================ */
-
-.detail-kaart {
-  background: var(--papier);
-  color: var(--inkt);
-  border-radius: 4px;
-  padding: 28px 28px 24px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-}
-
-.detail-kop {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
-  border-bottom: 2px dashed var(--papier-schaduw);
-  padding-bottom: 16px;
-  margin-bottom: 18px;
-}
-
-.detail-kop h2 {
-  font-family: var(--font-technisch);
-  font-size: 19px;
-  margin: 0 0 4px;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
-}
-
-.detail-kop .mini-kaart-datum {
-  margin-top: 4px;
-}
-
-.detail-omschrijving {
-  font-size: 14px;
-  line-height: 1.65;
-  color: #2b2a24;
-  white-space: pre-wrap;
-  margin: 0 0 22px;
-}
-
-.detail-acties {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-/* Statusknoppen (beheerder) */
-.status-knoppen {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 18px;
-}
-
-.status-knop {
-  font-family: var(--font-technisch);
-  font-size: 11px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: transparent;
-  border: 1.5px solid var(--papier-schaduw);
-  color: var(--inkt-zacht);
-  border-radius: 999px;
-  padding: 8px 14px;
-  cursor: pointer;
-  transition: all 0.12s ease;
-}
-
-.status-knop:hover,
-.status-knop:focus-visible {
-  border-color: var(--inkt-zacht);
-}
-
-.status-knop.actief[data-status="nieuw"] {
-  background: var(--stempel-rood);
-  border-color: var(--stempel-rood);
-  color: var(--papier);
-}
-
-.status-knop.actief[data-status="in-behandeling"] {
-  background: #8a6d1f;
-  border-color: #8a6d1f;
-  color: var(--papier);
-}
-
-.status-knop.actief[data-status="afgerond"] {
-  background: var(--groen-ontvangen);
-  border-color: var(--groen-ontvangen);
-  color: var(--papier);
-}
-
-/* Chat-knop, gevaar-knop (verwijderen) */
-.chat-knop,
-.gevaar-knop {
-  font-family: var(--font-technisch);
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  border-radius: 3px;
-  padding: 12px 20px;
-  cursor: pointer;
-  border: none;
-  transition: background-color 0.15s ease;
-}
-
-.chat-knop {
-  background: var(--blauw-diep);
-  color: var(--papier);
-}
-
-.chat-knop:hover,
-.chat-knop:focus-visible {
-  background: #08192f;
-}
-
-.gevaar-knop {
-  background: transparent;
-  border: 1.5px solid var(--stempel-rood-donker);
-  color: var(--stempel-rood-donker);
-  margin-left: auto;
-}
-
-.gevaar-knop:hover,
-.gevaar-knop:focus-visible {
-  background: var(--stempel-rood-donker);
-  color: var(--papier);
-}
-
-/* ============================================================
-   Chat
-   ============================================================ */
-
-.chat-kader {
-  background: var(--papier);
-  color: var(--inkt);
-  border-radius: 4px;
-  padding: 20px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  height: 60vh;
-  min-height: 380px;
-}
-
-.chat-titel {
-  font-family: var(--font-technisch);
-  font-size: 14px;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--inkt-zacht);
-  border-bottom: 2px dashed var(--papier-schaduw);
-  padding-bottom: 12px;
-  margin: 0 0 14px;
-}
-
-.chat-berichten {
-  flex: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding-right: 4px;
-}
-
-.chat-bericht {
-  max-width: 78%;
-  padding: 10px 14px;
-  border-radius: 12px;
-  font-size: 14px;
-  line-height: 1.5;
-  white-space: pre-wrap;
-}
-
-.chat-bericht .chat-afzender {
-  display: block;
-  font-family: var(--font-technisch);
-  font-size: 10px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 3px;
-  opacity: 0.65;
-}
-
-.chat-bericht.eigen {
-  align-self: flex-end;
-  background: var(--stempel-rood);
-  color: var(--papier);
-  border-bottom-right-radius: 3px;
-}
-
-.chat-bericht.ander {
-  align-self: flex-start;
-  background: #ece6d4;
-  color: var(--inkt);
-  border-bottom-left-radius: 3px;
-}
-
-.chat-leeg {
-  font-family: var(--font-technisch);
-  font-size: 12px;
-  color: var(--inkt-zacht);
-  text-align: center;
-  margin: auto;
-}
-
-.chat-invoer {
-  display: flex;
-  gap: 10px;
-  margin-top: 14px;
-  border-top: 2px dashed var(--papier-schaduw);
-  padding-top: 14px;
-}
-
-.chat-invoer input {
-  flex: 1;
+.field select, .field input[type="text"] {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 13.5px;
   font-family: var(--font-body);
-  font-size: 14px;
-  padding: 11px 14px;
-  border: 2px solid var(--papier-schaduw);
-  border-radius: 3px;
-  background: #fffdf8;
-  color: var(--inkt);
+  background: var(--surface);
+}
+.field input[type="range"] { width: 100%; }
+
+.divider { height: 1px; background: var(--line); margin: 20px 0; }
+
+.no-selection {
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  border: 1px dashed var(--line);
+  border-radius: 10px;
+  padding: 16px;
 }
 
-.chat-invoer input:focus {
-  border-color: var(--stempel-rood);
-  outline: none;
-}
-
-.chat-invoer button {
-  font-family: var(--font-technisch);
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  background: var(--stempel-rood);
-  color: var(--papier);
-  border: none;
-  border-radius: 3px;
-  padding: 0 22px;
-  cursor: pointer;
-}
-
-.chat-invoer button:hover,
-.chat-invoer button:focus-visible {
-  background: var(--stempel-rood-donker);
-}
-
-.chat-invoer button:disabled {
-  background: var(--papier-schaduw);
-  color: var(--inkt-zacht);
-  cursor: not-allowed;
+@media (max-width: 900px) {
+  .editor-shell { grid-template-columns: 1fr; }
+  .panel-left, .panel-right { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .stack-art { display: none; }
 }
